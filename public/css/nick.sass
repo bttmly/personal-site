@@ -1,14 +1,97 @@
+$serif: "PT Serif", Georgia, "Times New Roman", serif
+$sans: "FreightSans Pro", "PT Sans", Helvetica, Arial, sans-serif
+
 html
-  font-family: "PT Serif", Georgia, "Times New Roman", serif;
+  font-family: $serif
 
 h1, h2, h3, h4, h5, h6
-  font-family: "PT Sans", Helvetica, Arial, sans-serif;
-  font-weight: 400;
-  color: #313131;
-  letter-spacing: -.025rem;
+  font-family: $sans
+  font-weight: 300
+  color: #313131
+  letter-spacing: -.025rem
 
 .sidebar
-  font-family: "PT Sans", Helvetica, Arial, sans-serif;
+  font-family: $sans
 
 .pagination
-  font-family: "PT Sans", Helvetica, Arial, sans-serif;
+  font-family: $sans
+
+
+/* Home page styles */
+@keyframes fadeDark
+  0%
+    background: transparent
+  100%
+    background: rgba(0, 0, 0, .75)
+
+@keyframes fadeIn
+  0%
+    opacity: 0
+  100%
+    opacity: 1
+
+@keyframes fadeInAndUp
+  0%
+    opacity: 0
+    transform: translateY(4em)
+  100%
+    opacity: 1
+    transform: translateY(0)
+
+.home--body
+  background-image: url("/public/img/rain-window.jpg")
+  background-size: cover
+  background-position: center center
+  height: 100vh
+  color: #fff
+  &:after
+    content: ""
+    z-index: 0
+    position: absolute
+    top: 0
+    left: 0
+    width: 100%
+    height: 100%
+    background: transparent
+    animation: fadeDark .5s ease-out forwards
+
+
+.home--info
+  position: relative
+  display: flex
+  flex-direction: column
+  justify-content: space-around
+  height: 100%
+  z-index: 1
+  text-align: center
+  animation: fadeIn .5s ease-in .5s forwards
+  h2,
+  li
+    color: #fff
+  h2
+    font-size: 2.5em
+    font-weight: 100
+
+.name,
+.tagline
+  display: block
+
+.tagline
+  font-size: .75em
+
+.channel-links
+  padding-left: 0
+  li
+    font-family: $sans
+    font-size: 1.25em
+    display: inline-block
+    padding: .5rem .25rem
+    list-style-type: none
+    animation: fadeInAndUp .4s ease-out both
+
+
+$channels: 5
+@while $channels > 0
+  .channel-links li:nth-of-type(#{$channels})
+    animation-delay: .2s * $channels
+  $channels: $channels - 1

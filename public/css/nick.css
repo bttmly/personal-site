@@ -1,0 +1,100 @@
+html {
+  font-family: "PT Serif", Georgia, "Times New Roman", serif; }
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: "FreightSans Pro", "PT Sans", Helvetica, Arial, sans-serif;
+  font-weight: 300;
+  color: #313131;
+  letter-spacing: -0.025rem; }
+
+.sidebar {
+  font-family: "FreightSans Pro", "PT Sans", Helvetica, Arial, sans-serif; }
+
+.pagination {
+  font-family: "FreightSans Pro", "PT Sans", Helvetica, Arial, sans-serif; }
+
+/* Home page styles */
+@keyframes fadeDark {
+  0% {
+    background: transparent; }
+
+  100% {
+    background: rgba(0, 0, 0, 0.75); } }
+@keyframes fadeIn {
+  0% {
+    opacity: 0; }
+
+  100% {
+    opacity: 1; } }
+@keyframes fadeInAndUp {
+  0% {
+    opacity: 0;
+    transform: translateY(4em); }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0); } }
+.home--body {
+  background-image: url("/public/img/rain-window.jpg");
+  background-size: cover;
+  background-position: center center;
+  height: 100vh;
+  color: white; }
+  .home--body:after {
+    content: "";
+    z-index: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    animation: fadeDark 0.5s ease-out forwards; }
+
+.home--info {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  height: 100%;
+  z-index: 1;
+  text-align: center;
+  animation: fadeIn 0.5s ease-in 0.5s forwards; }
+  .home--info h2,
+  .home--info li {
+    color: white; }
+  .home--info h2 {
+    font-size: 2.5em;
+    font-weight: 100; }
+
+.name,
+.tagline {
+  display: block; }
+
+.tagline {
+  font-size: 0.75em; }
+
+.channel-links {
+  padding-left: 0; }
+  .channel-links li {
+    font-family: "FreightSans Pro", "PT Sans", Helvetica, Arial, sans-serif;
+    font-size: 1.25em;
+    display: inline-block;
+    padding: 0.5rem 0.25rem;
+    list-style-type: none;
+    animation: fadeInAndUp 0.4s ease-out both; }
+
+.channel-links li:nth-of-type(5) {
+  animation-delay: 1s; }
+
+.channel-links li:nth-of-type(4) {
+  animation-delay: 0.8s; }
+
+.channel-links li:nth-of-type(3) {
+  animation-delay: 0.6s; }
+
+.channel-links li:nth-of-type(2) {
+  animation-delay: 0.4s; }
+
+.channel-links li:nth-of-type(1) {
+  animation-delay: 0.2s; }

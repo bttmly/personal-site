@@ -48,17 +48,11 @@ title: Contact
 </div>
 
 <script src="{{ site.baseurl }}public/js/blog.js"></script>
-<script src="http://www.parsecdn.com/js/parse-1.2.18.min.js"></script>
 <script>
 
-  ( function( $, Parse ) {
+  ( function( $ ) {
 
-    Parse.initialize( 
-      "imcjoYKVqSTyp0LzQgEok5UjWYr84nOpp8O1gZny", // public app id.
-      "g0Gqz8Cd7KGC2enGfyWMWZZJ5VQhxpsDzwgyQfUP"  // public javascript key.
-    );
-
-    var Email = Parse.Object.extend( "Email" );
+    var sendEmailFnUrl = "https://api.parse.com/1/functions/sendEmail";
 
     var emailForm = $( ".js-email-form" )
     var emailSubject = $( ".js-email-subject" );
@@ -76,13 +70,14 @@ title: Contact
 
     var dfd = $.Deferred();
 
-    function createEmailInstance() {
+    // form setup
+    var formElements = emailForm.find( "input, textarea" )
 
+    function createEmailInstance() {
       emailForm.fadeOut( duration, function(){
         dfd.resolve();
       });
 
-      var email = new Email();
       var text = emailText.val().trim();
       var subject = emailSubject.val().trim();
       var fromName = emailFromName.val().trim();
@@ -90,18 +85,11 @@ title: Contact
 
       if ( text && subject && fromName && fromAddress ) {
 
-        email.set({
+        sendEmail({
           text: text,
           subject: subject,
           fromName: fromName,
-          fromAddress: fromAddress
-        });
-
-        email.save( null, {
-          success: function(){
-            sendEmail( email );
-          },
-          error: sendError
+          fromAddress: fromAddress          
         });
 
       } else {
@@ -111,10 +99,18 @@ title: Contact
     }
 
     function sendEmail( email ) {
-      Parse.Cloud.run( "sendEmail", email.toJSON(), {
+      return $.ajax({
+        url: sendEmailFnUrl,
+        data: email,
+        type: "POST",
+        beforeSend: function( req ) {
+          req.setRequestHeader("X-Parse-Application-Id", "imcjoYKVqSTyp0LzQgEok5UjWYr84nOpp8O1gZny");
+          req.setRequestHeader("X-Parse-REST-API-Key", "ZCs9Cz0vCzXtYH5Eq6TmlehB2WzpVCSYlxExdesc");        
+        },
         success: sendSuccess,
         error: sendError
       });
+
     };
 
     function sendComplete() {
@@ -139,6 +135,6 @@ title: Contact
 
     emailSend.one( "click", createEmailInstance );
 
-  })( jQuery, Parse );
+  })( jQuery );
 
 </script>

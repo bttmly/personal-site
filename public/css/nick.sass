@@ -107,21 +107,18 @@ button
   li
     color: #fff
   .name
-    font-size: 1.5em
+    font-size: 2em
     font-weight: 100
     animation: fadeInAndDown .5s ease-out .5s both
-
-
-.name,
-.tagline
-  display: block
-
-.tagline
-  font-size: .5em
-  font-weight: 100
-  text-transform: uppercase
-  letter-spacing: 2px
-
+  .tagline
+    font-size: .75em
+    font-weight: 100
+    text-transform: uppercase
+    letter-spacing: 2px
+    animation: fadeInAndDown .5s ease-out .75s both
+  .name,
+  .tagline
+    display: block
 
 .channel-links
   padding-left: 0
@@ -138,7 +135,7 @@ button
 $channels: 5
 @while $channels > 0
   .channel-links li:nth-of-type(#{$channels})
-    animation-delay: .5s + .1s * $channels
+    animation-delay: .65s + .1s * $channels
   $channels: $channels - 1
 
 

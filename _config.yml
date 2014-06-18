@@ -11,9 +11,10 @@ tagline:          'Web Developer'
 # description:      'A reserved <a href="http://jekyllrb.com" target="_blank">Jekyll</a> theme that places the utmost gravity on content with a hidden drawer. Made by <a href="https://twitter.com/mdo" target="_blank">@mdo</a>.'
 url:              http://nickbottomley.com
 paginate:         5
+paginate_path:    "blog/page:num"
 
 author:
-  name:           'Nick Bottomley'
+  name:           "Nick Bottomley"
   url:            http://nickbottomley.com
 
 # Custom vars

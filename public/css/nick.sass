@@ -40,12 +40,17 @@ button
     outline: 1px solid #333
 
 
+/* overrides */
+.masthead-title
+  small
+    font-size: 16px
+    text-transform: uppercase
 
 
 /* Home page styles */
 @keyframes fadeDark
   0%
-    background: transparent
+    background: rgba(0, 0, 0, .75)
   100%
     background: rgba(0, 0, 0, .5)
 
@@ -55,11 +60,13 @@ button
   100%
     background: transparent
 
-@keyframes fadeIn
+@keyframes fadeInAndDown
   0%
     opacity: 0
+    transform: translateY(-4rem)
   100%
     opacity: 1
+    transform: translateY(0)
 
 @keyframes fadeInAndUp
   0%
@@ -84,11 +91,8 @@ button
     left: 0
     width: 100%
     height: 100%
-  &:after
-    background: #fff
-    animation: fadeOutLight .5s ease-in-out both
   &:before
-    animation: fadeDark .25s ease-in-out both
+    animation: fadeDark 1.5s ease-out both
 
 .home--info
   position: relative
@@ -98,13 +102,15 @@ button
   height: 100%
   z-index: 1
   text-align: center
-  animation: fadeIn .5s ease-in .5s forwards
+  // animation: 
   h2,
   li
     color: #fff
-  h2
-    font-size: 2.5em
+  .name
+    font-size: 1.5em
     font-weight: 100
+    animation: fadeInAndDown .5s ease-out .5s both
+
 
 .name,
 .tagline
@@ -139,6 +145,12 @@ $channels: 5
 
 
 /* contact page */
+@keyframes spin
+  0%
+    transform: rotate(0deg)
+  100%
+    transform: rotate(360deg)
+
 .response-message 
   display: none
 
@@ -164,6 +176,14 @@ $channels: 5
   textarea
     height: 12em
 
+.contact-control-pair
+  @media (min-width: 38em)
+    display: flex
+    .contact-control
+      flex: 1
+      &:first-of-type
+        margin-right: 1rem
+
 .email-send
   background: transparent
   border: 1px solid #ddd  
@@ -176,3 +196,14 @@ $channels: 5
 .response-message
   font-family: $sans
   text-align: center
+
+.status-icon
+  font-family: sans-serif
+  font-size: 4rem
+  color: #ddd
+
+.error-icon
+  color: rgba(192, 57, 43, .5)
+
+.success-icon
+  color: rgba(39, 174, 96, .5)

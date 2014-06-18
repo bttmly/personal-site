@@ -1,0 +1,116 @@
+---
+layout: default
+title: Contact
+---
+<div class="email-form js-email-form">
+  <h2>Shoot me an email</h2>
+
+  <div class="contact-control">
+    <label for="email-subject">Subject</label>
+    <input type="text" class="with-focus-effect js-email-subject" id="email-subject">
+  </div>
+
+  <div class="contact-control">
+    <label for="email-from">From</label>
+    <input type="text" class="with-focus-effect js-email-from" id="email-from">
+  </div>
+
+  <div class="contact-control">
+    <label for="email-text">Body</label>
+    <textarea class="with-focus-effect js-email-text" id="email-text"></textarea>
+  </div>
+
+  <button type="button" class="email-send js-email-send">Send</button>
+</div>
+
+<div class="response-message error-message js-error-message">
+  <div class="status-icon"></div>
+  <p class="status-message">Something went wrong, sorry about that! Try me on <a href="http://twitter.com/nickhbottomley">Twitter</a>.</p>
+</div>
+
+<div class="response-message success-message js-success-message">
+  <div class="status-icon"></div>
+  <p class="status-message">I'll get back to you ASAP.</p>
+</div>
+
+<script src="{{ site.baseurl }}public/js/blog.js"></script>
+<script src="http://www.parsecdn.com/js/parse-1.2.18.min.js"></script>
+<script>
+
+  ( function( $, Parse ) {
+
+    Parse.initialize( 
+      "imcjoYKVqSTyp0LzQgEok5UjWYr84nOpp8O1gZny", // public app id.
+      "g0Gqz8Cd7KGC2enGfyWMWZZJ5VQhxpsDzwgyQfUP"  // public javascript key.
+    );
+
+    var Email = Parse.Object.extend( "Email" );
+
+    var emailForm = $( ".js-email-form" )
+    var emailSubject = $( ".js-email-subject" );
+    var emailFrom = $( ".js-email-from" );
+    var emailText = $( ".js-email-text" );
+    var emailSend = $( ".js-email-send" );
+
+    var errorMessage = $( ".js-error-message" );
+    var successMessage = $( ".js-success-message" );
+
+    // function validateInput() {
+    //   var subject = emailSubject.val().trim();
+    //   var from = emailFrom.val().trim();
+    //   var text = emailText.val().trim();
+    //   if ( subject && from && text ) {
+
+    //   }
+    // }
+
+    // function createEmailObject() {
+    //   var data = validateInput()
+    //   if ( data ) {
+    //     var email = new Email();
+    //     email.set( "subject", data.subject );
+    //     email.set( "from", data.from );
+    //     email.set( "text", data.text );
+    //     return email;
+    //   }
+    // }
+
+    function sendEmail() {
+      // var email = createEmailObject();
+      var emailData = {
+        subject: emailSubject.val().trim(),
+        from: emailFrom.val().trim(),
+        text: emailText.val().trim()
+      };
+
+      Parse.Cloud.run( "sendEmail", emailData, {
+        success: sendSuccess,
+        error: sendError
+      });
+    };
+
+    emailSend.one( "click", sendEmail );
+
+    function sendComplete() {
+      var dfd = $.Deferred();
+      emailForm.fadeOut( 400, function() {
+        dfd.resolve();
+      });
+      return dfd;
+    }
+
+    function sendSuccess( response ) {
+      sendComplete().then( function() {
+        successMessage.show( 400 );
+      });
+    }
+
+    function sendError( response ) {
+      sendComplete().then( function() {
+        errorMessage.fadeIn( 400 );
+      });
+    }
+
+  })( jQuery, Parse );
+
+</script>

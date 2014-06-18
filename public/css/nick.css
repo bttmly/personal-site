@@ -13,13 +13,42 @@ h1, h2, h3, h4, h5, h6 {
 .pagination {
   font-family: "FreightSans Pro", "PT Sans", Helvetica, Arial, sans-serif; }
 
+input,
+textarea,
+button {
+  font: inherit;
+  font-family: "FreightSans Pro", "PT Sans", Helvetica, Arial, sans-serif; }
+
+input[type="text"],
+textarea {
+  border: 1px solid #333333; }
+
+textarea {
+  resize: vertical; }
+
+button {
+  cursor: pointer; }
+
+/* global element styles */
+.with-focus-effect {
+  outline: 8px solid transparent;
+  transition: outline 0.2s ease-in-out; }
+  .with-focus-effect:focus {
+    outline: 1px solid #333333; }
+
 /* Home page styles */
 @keyframes fadeDark {
   0% {
     background: transparent; }
 
   100% {
-    background: rgba(0, 0, 0, 0.75); } }
+    background: rgba(0, 0, 0, 0.5); } }
+@keyframes fadeOutLight {
+  0% {
+    background: white; }
+
+  100% {
+    background: transparent; } }
 @keyframes fadeIn {
   0% {
     opacity: 0; }
@@ -38,18 +67,21 @@ h1, h2, h3, h4, h5, h6 {
   background-image: url("/public/img/rain-window.jpg");
   background-size: cover;
   background-position: center center;
+  overflow: hidden;
   height: 100vh;
   color: white; }
-  .home--body:after {
+  .home--body:before, .home--body:after {
     content: "";
-    z-index: 0;
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
-    height: 100%;
-    background: transparent;
-    animation: fadeDark 0.5s ease-out forwards; }
+    height: 100%; }
+  .home--body:after {
+    background: white;
+    animation: fadeOutLight 0.5s ease-in-out both; }
+  .home--body:before {
+    animation: fadeDark 0.25s ease-in-out both; }
 
 .home--info {
   position: relative;
@@ -72,29 +104,69 @@ h1, h2, h3, h4, h5, h6 {
   display: block; }
 
 .tagline {
-  font-size: 0.75em; }
+  font-size: 0.5em;
+  font-weight: 100;
+  text-transform: uppercase;
+  letter-spacing: 2px; }
 
 .channel-links {
   padding-left: 0; }
   .channel-links li {
     font-family: "FreightSans Pro", "PT Sans", Helvetica, Arial, sans-serif;
     font-size: 1.25em;
-    display: inline-block;
+    display: block;
     padding: 0.5rem 0.25rem;
     list-style-type: none;
     animation: fadeInAndUp 0.4s ease-out both; }
+    .channel-links li a {
+      color: white; }
 
 .channel-links li:nth-of-type(5) {
   animation-delay: 1s; }
 
 .channel-links li:nth-of-type(4) {
-  animation-delay: 0.8s; }
+  animation-delay: 0.9s; }
 
 .channel-links li:nth-of-type(3) {
-  animation-delay: 0.6s; }
+  animation-delay: 0.8s; }
 
 .channel-links li:nth-of-type(2) {
-  animation-delay: 0.4s; }
+  animation-delay: 0.7s; }
 
 .channel-links li:nth-of-type(1) {
-  animation-delay: 0.2s; }
+  animation-delay: 0.6s; }
+
+/* contact page */
+.response-message {
+  display: none; }
+
+.contact-control {
+  margin-bottom: 1rem; }
+  .contact-control label,
+  .contact-control input,
+  .contact-control textarea {
+    width: 100%;
+    display: block; }
+  .contact-control label {
+    font-size: 75%;
+    font-weight: bold;
+    font-family: "FreightSans Pro", "PT Sans", Helvetica, Arial, sans-serif;
+    text-transform: uppercase; }
+  .contact-control input,
+  .contact-control textarea {
+    padding: 0.25rem 0.5rem; }
+  .contact-control textarea {
+    height: 12em; }
+
+.email-send {
+  background: transparent;
+  border: 1px solid #dddddd;
+  padding: 0.5rem 1rem;
+  margin: 2rem auto 1rem;
+  display: block;
+  max-width: 100%;
+  width: 12rem; }
+
+.response-message {
+  font-family: "FreightSans Pro", "PT Sans", Helvetica, Arial, sans-serif;
+  text-align: center; }

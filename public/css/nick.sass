@@ -16,13 +16,44 @@ h1, h2, h3, h4, h5, h6
 .pagination
   font-family: $sans
 
+input,
+textarea,
+button
+  font: inherit
+  font-family: $sans
+
+input[type="text"],
+textarea
+  border: 1px solid #333
+
+textarea
+  resize: vertical
+
+button
+  cursor: pointer
+
+/* global element styles */
+.with-focus-effect
+  outline: 8px solid transparent
+  transition: outline .2s ease-in-out
+  &:focus
+    outline: 1px solid #333
+
+
+
 
 /* Home page styles */
 @keyframes fadeDark
   0%
     background: transparent
   100%
-    background: rgba(0, 0, 0, .75)
+    background: rgba(0, 0, 0, .5)
+
+@keyframes fadeOutLight
+  0%
+    background: #fff
+  100%
+    background: transparent
 
 @keyframes fadeIn
   0%
@@ -42,19 +73,22 @@ h1, h2, h3, h4, h5, h6
   background-image: url("/public/img/rain-window.jpg")
   background-size: cover
   background-position: center center
+  overflow: hidden
   height: 100vh
   color: #fff
+  &:before,
   &:after
     content: ""
-    z-index: 0
     position: absolute
     top: 0
     left: 0
     width: 100%
     height: 100%
-    background: transparent
-    animation: fadeDark .5s ease-out forwards
-
+  &:after
+    background: #fff
+    animation: fadeOutLight .5s ease-in-out both
+  &:before
+    animation: fadeDark .25s ease-in-out both
 
 .home--info
   position: relative
@@ -77,21 +111,68 @@ h1, h2, h3, h4, h5, h6
   display: block
 
 .tagline
-  font-size: .75em
+  font-size: .5em
+  font-weight: 100
+  text-transform: uppercase
+  letter-spacing: 2px
+
 
 .channel-links
   padding-left: 0
   li
     font-family: $sans
     font-size: 1.25em
-    display: inline-block
+    display: block
     padding: .5rem .25rem
     list-style-type: none
     animation: fadeInAndUp .4s ease-out both
-
+    a
+      color: #fff
 
 $channels: 5
 @while $channels > 0
   .channel-links li:nth-of-type(#{$channels})
-    animation-delay: .2s * $channels
+    animation-delay: .5s + .1s * $channels
   $channels: $channels - 1
+
+
+
+
+/* contact page */
+.response-message 
+  display: none
+
+.contact-control
+  margin-bottom: 1rem
+
+  label,
+  input,
+  textarea
+    width: 100%
+    display: block
+
+  label
+    font-size: 75%
+    font-weight: bold
+    font-family: $sans
+    text-transform: uppercase
+
+  input,
+  textarea
+    padding: .25rem .5rem
+
+  textarea
+    height: 12em
+
+.email-send
+  background: transparent
+  border: 1px solid #ddd  
+  padding: .5rem 1rem
+  margin: 2rem auto 1rem
+  display: block
+  max-width: 100%
+  width: 12rem
+
+.response-message
+  font-family: $sans
+  text-align: center

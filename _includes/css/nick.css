@@ -48,12 +48,14 @@ button {
 
   100% {
     background: rgba(0, 0, 0, 0.5); } }
+
 @keyframes fadeOutLight {
   0% {
     background: white; }
 
   100% {
     background: transparent; } }
+
 @keyframes fadeInAndDown {
   0% {
     opacity: 0;
@@ -62,6 +64,7 @@ button {
   100% {
     opacity: 1;
     transform: translateY(0); } }
+
 @keyframes fadeInAndUp {
   0% {
     opacity: 0;
@@ -70,8 +73,9 @@ button {
   100% {
     opacity: 1;
     transform: translateY(0); } }
+
 .home--body {
-  background-image: url("/public/img/rain-window.jpg");
+  background-image: url("{{ site.baseurl }}public/img/rain-window.JPG");
   background-size: cover;
   background-position: center center;
   overflow: hidden;
@@ -146,6 +150,7 @@ button {
 
   100% {
     transform: rotate(360deg); } }
+
 .response-message {
   display: none; }
 

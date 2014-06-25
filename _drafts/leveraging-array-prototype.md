@@ -3,12 +3,12 @@ layout: post
 title: Leveraging Array.prototype 
 ---
 
-_Originally posted to [Medium](https://medium.com/@nickhbottomley/65a3e88415c5) on April 26, 2014; heavily edited and re-posted here on June 24, 2014._
+_Originally posted to [Medium](https://medium.com/@nickhbottomley/65a3e88415c5) on April 26, 2014; heavily edited and re-posted here on June 25, 2014._
 
 `Array.prototype` is the coolest object in JavaScript. Well, the [ES5 version](http://blogs.msdn.com/b/ie/archive/2010/12/13/ecmascript-5-part-2-array-extras.aspx) at least. Its methods are intuitive and powerful, and an understanding of how to combine them lets you write expressive, concise code. Even better, these methods can be applied to a variety of objects, not just arrays. For instance, since strings have a `length` property and their characters can be accessed by their index, you can call `Array.prototype` methods on them like so:
 
 ```javascript
-var str = "aaaaaaa"
+var str = "aaaaaaa";
 Array.prototype.every.call( str, function( letter ) {
   return letter === "a";
 }); // returns true
@@ -17,7 +17,7 @@ Yes, this isn't the kind of use case that gives you developer goosebumps. But th
 
 jQuery is awesome, and I don't advocate developers should just stop using it. That said, there are cases where using jQuery is suboptimal. For example, jQuery should not be used as a dependency for libraries, if it's reasonably avoidable. Especially in cases where where only modern browser support is necessary, sometimes jQuery is just not necessary. Modern browsers support APIs that make some typical jQuery operations like property/attribute manipulation and tree traversal fairly easy. But even if you have no plans to go jQuery-less, you can use the patterns described here to apply useful methods like `reduce()` to jQuery collections. 
 
-While some jQuery-type stuff is pretty simple, the native DOM API is still missing easy, built-in ways to operate on and manipulate _collections_ of elements. Calls to methods like `querySelectorAll()` and `getElementsByTagName()` return array-like objects that are basically devoid of useful methods. Specifically, both _should_ return instances of `HTMLCollection`, but that’s not how it [actually works](https://bugzilla.mozilla.org/show_bug.cgi?id=14869) — querySelectorAll returns an instance of `NodeList` in WebKit browsers. The specifics aren't really important; the main point is that despite their similarities, these objects don't have access to the awesomeness that is `Array.prototype`.
+While some jQuery-type stuff is pretty simple, the native DOM API is still missing easy, built-in ways to operate on and manipulate _collections_ of elements. Methods like `querySelectorAll()` and `getElementsByTagName()` return array-like objects that are basically devoid of useful methods. Specifically, both _should_ return instances of `HTMLCollection`, but that’s not how it [actually works](https://bugzilla.mozilla.org/show_bug.cgi?id=14869) — querySelectorAll returns an instance of `NodeList` in WebKit browsers. The specifics aren't really important; the main point is that despite their similarities, these objects don't have access to the awesomeness that is `Array.prototype`.
 
 ## Method Hijacking
 
@@ -26,7 +26,7 @@ The following is a piece of code that nearly every JavaScript programmer has had
 ```javascript
 var args = Array.prototype.slice.call( arguments );
 ```
-The arguments object isn't an array but to manipulate it with operations like `push()` or `pop()`, you need to turn it into one. Probably the simplest way to accomplish this is to `slice` it. This works just fine, but it'd be nice to avoid writing `Array.prototype.slice.call` every single time you want to turn `arguments` into an array. What we really want a free-floating `slice()` function. Here's how to do that:
+The arguments object isn't an array but to manipulate it with operations like `push()` or `pop()`, you need to turn it into one. Probably the simplest way to accomplish this is to `slice` it. Since `arguments` is similar to an array, it's possible to use `Array.prototype` methods on it. The `slice()` method creates a shallow copy of a portion of an array; calling it without arguments copies the whole array. Also, `slice()` always returns an array. So the line above creates a shallow copy of the arguments, _as an array_, which works because `arguments` is similar to an array in the ways `slice()` cares about. This works just fine, but it'd be nice to avoid writing `Array.prototype.slice.call` every single time you want to turn `arguments` into an array. What we really want a free-floating `slice()` function. Here's how to do that:
 
 ```javascript
 var slice = Function.prototype.call.bind( Array.prototype.slice );
@@ -91,9 +91,9 @@ var slice2 = function(){}.call.bind( [].slice );
 // slice1 and slice2 work exactly the same.
 ```
 
-Any function's `call` method points to `Function.prototype.call` (if it hasn't been overridden for some reason). Likewise, any array's `slice` method resolves to `Array.prototype.slice`. This works provided that we're planning to use the function objects themselves and not expecting them to have any particular `this` context.
+Any function's `call` method points to `Function.prototype.call` (if it hasn't been overridden for some reason). Likewise, any array's `slice` method resolves to `Array.prototype.slice`. This works provided that we're expecting to work with the function objects themselves and not expecting them to have any particular `this` context.
 
-Back to our bling function which will work with basically any valid CSS selector. It takes an optional second argument, which is an element on which to start the query. With a few more lines of code you could optimize it to use [faster](http://jsperf.com/getelementbyid-vs-queryselector) selection methods like `getElementById`, `getElementsByTagName`, etc. when appropriate. Further, clever application of array methods, plus a working knowledge of the vanilla DOM API, lets you mimic much of jQuery's functionality. Here's how we'd get all the children of all `div` elements:
+Back to our bling function which will work with basically any valid CSS selector. It takes an optional second argument, which is an element on which to start the query. With a few more lines of code you could optimize it to use [faster](http://jsperf.com/getelementbyid-vs-queryselector) selection methods like `getElementById`, `getElementsByClassName`, etc. when appropriate. Further, clever application of array methods, plus a working knowledge of the vanilla DOM API, lets you mimic much of jQuery's functionality. Here's how we'd get all the children of all `div` elements:
 
 ```javascript
 $( "div" ).reduce( function( collection, item ){
@@ -134,7 +134,7 @@ Eventually we’ll be able to do away with these workarounds. The DOM4 specifica
 
 Moreover, gaining fluency with the `Array.prototype` methods is an immensely valuable skill. At [Hack Reactor](http://www.hackreactor.com/), "toy problems" are one of the central parts of the curriculum. I've found that elegant solutions to many of these involve using `Array.prototype` methods in clever ways. Abstracting away the details of iteration and combining these methods into powerful compositions is a great way to write code that is succinct and easily comprehensible. Once you're comfortable with how they work and where they can be used, you'll see applications for `Array.prototype` methods everywhere.
 
-Thanks for reading. Find me on [Twitter](https://twitter.com/nickhbottomley) for any questions or comments.
+Thanks for reading. Find me on [Twitter](https://twitter.com/nickhbottomley) for any questions or comments, or open an [issue](https://github.com/nickb1080/personal-site/issues) on this repo.
 
 ---
 

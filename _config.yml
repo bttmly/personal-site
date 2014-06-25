@@ -7,9 +7,9 @@ permalink:        pretty
 
 # Setup
 title:            Nick Bottomley
-tagline:          'Web Developer'
+tagline:          "Web Developer"
 # description:      'A reserved <a href="http://jekyllrb.com" target="_blank">Jekyll</a> theme that places the utmost gravity on content with a hidden drawer. Made by <a href="https://twitter.com/mdo" target="_blank">@mdo</a>.'
-url:              http://nickbottomley.com
+url:              "http://nickbottomley.com"
 paginate:         5
 paginate_path:    "blog/page:num"
 
@@ -18,6 +18,10 @@ baseurl:          "http://nickbottomley.com"
 author:
   name:           "Nick Bottomley"
   url:            "http://nickbottomley.com"
+
+github:
+  repo:           "https://github.com/nickb1080/personal-site"
+  home:           "https://github.com/nickb1080/"
 
 # Custom vars
 # version:          1.0.0

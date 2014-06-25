@@ -1,13 +1,25 @@
 #!/usr/local/bin/node
 
 var fs = require("fs");
+
 var args = process.argv.slice(2);
-var data = fs.readFileSync("_drafts/" + args[0] + ".md"));
+var data = fs.readFileSync( args[0] );
+var name = args[0].split( "/" )[1];
 
 var date = new Date();
+
 var month = date.getMonth() + 1;
+if ( month.toString().length === 1 ) {
+  month = "0" + month;
+}
+
 var day = date.getDate();
+if ( day.toString().length === 1 ) {
+  day = "0" + day;
+}
+
 var year = date.getYear() + 1900;
 
-var fileName = year + "-" + month + "-" + date + "-" + args[0] + ".md";
-fs.writeFileSync("_posts/" + fileName, data);
+var name = year + "-" + month + "-" + day + "-" + name;
+
+fs.writeFileSync("_posts/" + name, data);

@@ -13,7 +13,7 @@ url:              http://nickbottomley.com
 paginate:         5
 paginate_path:    "blog/page:num"
 
-baseurl:          "http://nickb1080.github.io/personal-site/"
+baseurl:          "http://nickb1080.github.io/personal-site"
 
 author:
   name:           "Nick Bottomley"

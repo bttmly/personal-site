@@ -91,7 +91,7 @@ var slice2 = function(){}.call.bind( [].slice );
 // slice1 and slice2 work exactly the same.
 ```
 
-Any function's `call` method points to `Function.prototype.call` (if it hasn't been overridden for some reason). Likewise, any array's `slice` method resolves to `Array.prototype.slice`. This works provided that we're planning to use the function objects themselves and not expecting them to have any particular `this` context.
+Any function's `call` method points to `Function.prototype.call` (if it hasn't been overridden for some reason). Likewise, any array's `slice` method resolves to `Array.prototype.slice`. This works provided that we're expecting to work with the function objects themselves and not expecting them to have any particular `this` context.
 
 Back to our bling function which will work with basically any valid CSS selector. It takes an optional second argument, which is an element on which to start the query. With a few more lines of code you could optimize it to use [faster](http://jsperf.com/getelementbyid-vs-queryselector) selection methods like `getElementById`, `getElementsByTagName`, etc. when appropriate. Further, clever application of array methods, plus a working knowledge of the vanilla DOM API, lets you mimic much of jQuery's functionality. Here's how we'd get all the children of all `div` elements:
 

@@ -17,7 +17,7 @@ Yes, this isn't the kind of use case that gives you developer goosebumps. But th
 
 jQuery is awesome, and I don't advocate developers should just stop using it. That said, there are cases where using jQuery is suboptimal. For example, jQuery should not be used as a dependency for libraries, if it's reasonably avoidable. Especially in cases where where only modern browser support is necessary, sometimes jQuery is just not necessary. Modern browsers support APIs that make some typical jQuery operations like property/attribute manipulation and tree traversal fairly easy. But even if you have no plans to go jQuery-less, you can use the patterns described here to apply useful methods like `reduce()` to jQuery collections. 
 
-While some jQuery-type stuff is pretty simple, the native DOM API is still missing easy, built-in ways to operate on and manipulate _collections_ of elements. Methods like `querySelectorAll()` and `getElementsByTagName()` return array-like objects that are basically devoid of useful methods. Specifically, both _should_ return instances of `HTMLCollection`, but that’s not how it [actually works](https://bugzilla.mozilla.org/show_bug.cgi?id=14869) — querySelectorAll returns an instance of `NodeList` in WebKit browsers. The specifics aren't really important; the main point is that despite their similarities, these objects don't have access to the awesomeness that is `Array.prototype`.
+While some jQuery-type stuff is pretty simple, the native DOM API is still missing easy, built-in ways to operate on and manipulate _collections_ of elements. Calls to methods like `querySelectorAll()` and `getElementsByTagName()` return array-like objects that are basically devoid of useful methods. Specifically, both _should_ return instances of `HTMLCollection`, but that’s not how it [actually works](https://bugzilla.mozilla.org/show_bug.cgi?id=14869) — querySelectorAll returns an instance of `NodeList` in WebKit browsers. The specifics aren't really important; the main point is that despite their similarities, these objects don't have access to the awesomeness that is `Array.prototype`.
 
 ## Method Hijacking
 
@@ -157,5 +157,3 @@ for ( var i = 0; i < methods.length; i++ ) {
 var demethodize = 
   Function.prototype.bind.bind( Function.prototype.call );
 ```
-
-3.) Interested in writing something without jQuery? [Here](http://toddmotto.com/is-it-time-to-drop-jquery-essentials-to-learning-javascript-from-a-jquery-background/) [are](http://www.sitepoint.com/do-you-really-need-jquery/) [some](http://blog.ponyfoo.com/2013/07/09/getting-over-jquery) [posts](http://remysharp.com/2013/04/19/i-know-jquery-now-what/) on that very topic. Also, head over to the indespensible [youmightnotneedjquery.com](http://youmightnotneedjquery.com/) to see jQuery-to-vanilla recipes.

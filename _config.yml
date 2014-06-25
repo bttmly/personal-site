@@ -19,9 +19,14 @@ author:
   name:           "Nick Bottomley"
   url:            "http://nickbottomley.com"
 
-github:
-  repo:           "https://github.com/nickb1080/personal-site"
-  home:           "https://github.com/nickb1080/"
+github_repo:      "https://github.com/nickb1080/personal-site"
+
+networks:
+  github:           "https://github.com/nickb1080/"
+  twitter:          "https://twitter.com/bttmly"
+  linkedin:         ""
+  facebook:         ""
+  codepen:          ""
 
 # Custom vars
 # version:          1.0.0

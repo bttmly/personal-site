@@ -52,6 +52,7 @@
       data: email,
       type: "POST",
       beforeSend: function( req ) {
+        // public Parse keys
         req.setRequestHeader("X-Parse-Application-Id", "imcjoYKVqSTyp0LzQgEok5UjWYr84nOpp8O1gZny");
         req.setRequestHeader("X-Parse-REST-API-Key", "ZCs9Cz0vCzXtYH5Eq6TmlehB2WzpVCSYlxExdesc");        
       },

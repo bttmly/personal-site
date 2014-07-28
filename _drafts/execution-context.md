@@ -32,28 +32,31 @@ document.body.constructor === iframeBody.constructor
 // false! Woah.
 ```
 
-The parent `body` and child `body` are different objects; that makes perfect sense. But, crucially, they are also _instances_ of different _constructors_ (or, whatever, DOM interfaces if you want to be pedantic). The point is, the parent window has an `HTMLBodyElement` object, and the child iframe has a totally different `HTMLBodyElement` object. They act the same, but they don't `===` each other. Thing is, `HTMLBodyElement` just isn't very useful. Let's try and find something that'll actually benefit us somehow. Perhaps my [favorite object](http://nickbottomley.com/2014/06/25/leveraging-array-prototype/)?
+The parent `body` and child `body` are different objects; that makes perfect sense. But, crucially, they are also _instances_ of different _constructors_ (or, whatever, DOM interfaces if you want to be pedantic). Each DOM element has a constructor. For `<body>`, tht constructor is `HTMLBodyElement`. The point is, the parent window has an `HTMLBodyElement` object, and the child iframe has a totally different `HTMLBodyElement` object. They act the same, but they don't `===` each other. As cool as a unique `HTMLBodyElement` might be, it just isn't very useful. Let's try and find something that'll actually benefit us somehow. Perhaps my [favorite object](http://nickbottomley.com/2014/06/25/leveraging-array-prototype/)?
 
 ```javascript
 // builds on the previous snippet.
 var BizzaroArray = iframe.contentWindow.Array;
 BizzaroArray === Array; // false...
-BizzaroArray.prototype === Array.prototype; // false!
+BizzaroArray.prototype === Array.prototype; // false! Oh shit!
 ```
-Now we're getting somewhere! You can freely extend `BizarroArray.prototype` without affecting `Array.Prototype`. The behavior of existing arrays won't be affected, but any instances of `BizzaroArray` you create will have access to the modified prototype. Keep in mind that declaring anything with brackets will return an instance of `Array`. But you can easily create a factory function that produces `BizzaroArray` instances.
+Now we're getting somewhere! You can freely extend `BizarroArray.prototype` without affecting `Array.Prototype`. The behavior of existing arrays won't be affected, but any instances of `BizzaroArray` you create will have access to the modified prototype. Keep in mind that declaring anything with `[]` will return an instance of `Array`. But you can easily create a factory function that produces `BizzaroArray` instances.
 
 ```javascript
 // builds on the previous snippet.
-function bizzaroFactory( arr ) {
+function bizzaroFactory ( arr ) {
   return ( new BizarroArray() ).concat( arr );
 }
 ```
-You could set up this factory in a few different ways, and I haven't tested them for performance. Calling `BizarroArray.prototype.slice` on a regular array should transform it. Alternately, `push`ing items onto a new instance would work too.There's a great little project called [Poser](https://github.com/bevacqua/poser) by Nicolas Bevacqua which provides a clean interface for getting references to objects from iframes.
+You could set up this factory in a few different ways, though I haven't tested them for performance. Calling `BizarroArray.prototype.slice` on a regular array should transform it. Alternately, `push`ing items onto a new instance would work too.There's a great little project called [Poser](https://github.com/bevacqua/poser) by Nicolas Bevacqua which provides a clean interface for getting references to objects from iframes.
 
 ## Yeah, So?
 Underscore and LoDash are pretty great as-is. They're well-tested, widely used, and well documented. Still, they aren't 
 
 ## Compare to Extending `Array`
+It's not difficult to make a class that inherits from `Array`.
+
+
 A while back I tried to accomplish basically the same thing in a different way.
 
 ```javascript
@@ -67,5 +70,7 @@ methods.forEach( function( methodName ) {
 });
 ```
 This is an absolute trainwreck. I mean, it works. But it's an algorithmic disaster. First, we have to re-instantiate a Collection each time we call one of these methods. This is clearly less than optimal, but the constructor works in linear time, so, OK (sorta). Worse, and less apparent, is the `arguments` situation. The V8 engine can't optimize this method because of the way `arguments` is treated here. This is fixable, but, honestly, doens't this just kind of suck?
+
+Nearly all of the awesome Underscore methods can be reduced to 
 
 In an ideal world, you'd simply extend `Array.prototype` in some way that 

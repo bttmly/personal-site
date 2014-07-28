@@ -97,7 +97,8 @@ Back to our bling function which will work with basically any valid CSS selector
 
 ```javascript
 $( "div" ).reduce( function( collection, item ){
-  return [].concat.apply( collection, item.children );
+  [].push.apply( collection, item.children );
+  return collection;
 }, [] );
 ```
 Since our `$` returns arrays, you can easily chain method calls together to manipulate collections of DOM nodes. But, yes, I realize this is much more verbose than jQuery's `.children()`.

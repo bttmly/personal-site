@@ -5,6 +5,8 @@ title: Choosing An Iteration Method
 
 The methods available on `Array.prototype` are awesome and there are tons of ways to use them. In order to become an iteration wizard, it's essential to have a clear understanding of what each method does, so you can quickly reach for the right one.
 
+<!--more-->
+
 Step one: do you need to definitely iterate over every item, or can you exit early under some circumstance? If you want to iterate _until_ you hit a particular condition, `every` and `some` are your friends. Otherwise, check out `map`, `filter`, and `reduce`.
 
 Step two: what does the output of your desired operation look like? Is it an array of the same length, with different items? Or a subset of the original array? Or something more exotic? Defining your output in terms of your input is crucial.

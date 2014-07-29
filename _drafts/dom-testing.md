@@ -8,12 +8,13 @@ title: DOM Testing
 TL;DR
 
 - Unit testing DOM manipulation can be tricky
-- Create DOM nodes on the fly and use them for testing
-
+- Avoid confusing side-effects by using some kind of DOM node factory.
+- Create elements, run tests against them, then dispose of them.
 
 ```javascript
 var htmlDocs =
   ['./input.html',
+  // ...
   './select.html']
 
 var promises = htmlDocs.map( $.get );
@@ -41,6 +42,11 @@ var domTrees = (function () {
 })();
 ```
 
+This approach is based on two things:
 
 1. A promise-returning AJAX method.
-2. A way to aggregate promises.
+2. A way to aggregate promises into a single "thennable".
+
+jQuery provides both of these, but you can get this functionality with other libraries. Here I'm going to focus on how to implement this with jQuery.
+
+We want to ensure we have a DOM tree in a predictable state each time we run a test. To accomplish this we create a new set of DOM nodes on the fly from an HTML string and run our tests against those elements.

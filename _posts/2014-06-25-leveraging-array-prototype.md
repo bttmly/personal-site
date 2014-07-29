@@ -7,6 +7,8 @@ _Originally posted to [Medium](https://medium.com/@nickhbottomley/65a3e88415c5) 
 
 `Array.prototype` is the coolest object in JavaScript. Well, the [ES5 version](http://blogs.msdn.com/b/ie/archive/2010/12/13/ecmascript-5-part-2-array-extras.aspx) at least. Its methods are intuitive and powerful, and an understanding of how to combine them lets you write expressive, concise code. Even better, these methods can be applied to a variety of objects, not just arrays. For instance, since strings have a `length` property and their characters can be accessed by their index, you can call `Array.prototype` methods on them like so:
 
+<!--more-->
+
 ```javascript
 var str = "aaaaaaa";
 Array.prototype.every.call( str, function( letter ) {
@@ -93,7 +95,7 @@ var slice2 = function(){}.call.bind( [].slice );
 
 Any function's `call` method points to `Function.prototype.call` (if it hasn't been overridden for some reason). Likewise, any array's `slice` method resolves to `Array.prototype.slice`. This works provided that we're expecting to work with the function objects themselves and not expecting them to have any particular `this` context.
 
-Back to our bling function which will work with basically any valid CSS selector. It takes an optional second argument, which is an element on which to start the query. With a few more lines of code you could optimize it to use [faster](http://jsperf.com/getelementbyid-vs-queryselector) selection methods like `getElementById`, `getElementsByClassName`, etc. when appropriate. Further, clever application of array methods, plus a working knowledge of the vanilla DOM API, lets you mimic much of jQuery's functionality. Here's how we'd get all the children of all `div` elements:
+Back to our bling function which will work with basically any valid CSS selector. It takes an optional second argument, which is an element on which to start the query. With a few more lines of code you could optimize it to use [faster](http://jsperf.com/getelementbyid-vs-queryselector) selection methods like `getElementById`, `getElementsByClassName`, etc. when appropriate. Further, clever application of array methods, plus a working knowledge of the vanilla DOM API, lets you mimic much of jQuery's functionality. <span id="all-children"></span>Here's how we'd get all the children of all `div` elements:
 
 ```javascript
 $( "div" ).reduce( function( collection, item ){
@@ -135,7 +137,7 @@ Eventually we’ll be able to do away with these workarounds. The DOM4 specifica
 
 Moreover, gaining fluency with the `Array.prototype` methods is an immensely valuable skill. At [Hack Reactor](http://www.hackreactor.com/), "toy problems" are one of the central parts of the curriculum. I've found that elegant solutions to many of these involve using `Array.prototype` methods in clever ways. Abstracting away the details of iteration and combining these methods into powerful compositions is a great way to write code that is succinct and easily comprehensible. Once you're comfortable with how they work and where they can be used, you'll see applications for `Array.prototype` methods everywhere.
 
-Thanks for reading. Find me on [Twitter](https://twitter.com/nickhbottomley) for any questions or comments, or open an [issue](https://github.com/nickb1080/personal-site/issues) on this repo.
+Thanks for reading. Find me on [Twitter](https://twitter.com/bttmly) for any questions or comments, or open an [issue](https://github.com/nickb1080/personal-site/issues) on this repo.
 
 ---
 

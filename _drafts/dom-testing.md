@@ -3,10 +3,7 @@ layout: post
 title: DOM Testing
 ---
 
-Unit testing the DOM can be tricky business. Googling "unit testing DOM" isn't much help either. The first hit is [QUnit](), which has a pretty basic example but doesn't provide much in the way of a comprehensive approach.
-
-- Memory leaks
-
+// The top hits for unit testing DOM
 
 TL;DR
 
@@ -46,8 +43,6 @@ var domTrees = (function () {
 ```
 
 This approach is based on two things:
-
-At the most basic, this approach requires a way to execute some code after a set of AJAX calls have resolved. 
 
 1. A promise-returning AJAX method.
 2. A way to aggregate promises into a single "thennable".

@@ -1,9 +1,10 @@
 ---
 layout: post
-title: ES5 Object Static Methods
+title: Restricted Objects
 ---
 
 ES5 provides three static methods on `Object` to prevent various types of changes to your objects. They are, in order of strength:
+
 1. `Object.preventExtensions` [MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/preventExtensions)
 2. `Object.seal` [MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/seal)
 3. `Object.freeze` [MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/freeze)
@@ -26,60 +27,64 @@ function testObjRestrictions ( method ) {
   try {
     obj.newKey = "newValue";
   } catch ( err ) {
-    console.err( err ); // "Can't add property otherKey, object is not extensible"
+    console.error( err );
+    // => "Can't add property otherKey, object is not extensible"
   }
 
   // Case: 2 deleting a property
   try {
     delete obj.key;
   } catch ( err ) {
-    console.err( err ); // "Cannot delete property 'key' of #<Object>"
+    console.error( err );
+    // => "Cannot delete property 'key' of #<Object>"
   }
 
   // Case 3: reassigning a property
   try {
     obj.key = "changedValue";
   } catch ( err ) {
-    console.err( err ); "Cannot assign to read only property 'key' of #<Object>"
+    console.error( err );
+    // => "Cannot assign to read only property 'key' of #<Object>"
   }
 }
 ```
 
 This function will allow us to catch and inspect the various errors thrown by `preventExtensions`, `seal`, and `freeze`. Passing `preventExtensions` to this function will only throw in case 1, when attempting to add another property. Using `seal` will throw in cases 1 and 2, so the own properties of the object can't be changed at all. Finally, `freeze` will throw in all three cases; no properties can be added, removed, or reassigned. Remember, these errors only get thrown when `'use strict'` is active.
 
-<!--
-<table>
+<table class="plain">
   <tr>
     <td></td>
-    <td>preventExtensions</td>
-    <td>seal</td>
-    <td>freeze</td>
+    <td><code>preventExtensions</code></td>
+    <td><code>seal</code></td>
+    <td><code>freeze</code></td>
   </tr>
   <tr>
     <td>add property</td>
-    <td class="cell-negative">throws</td>
-    <td class="cell-negative">throws</td>
-    <td class="cell-negative">throws</td>
+    <td class="cell-negative">fails/throws</td>
+    <td class="cell-negative">fails/throws</td>
+    <td class="cell-negative">fails/throws</td>
   </tr>
   <tr>
     <td>delete property</td>
     <td class="cell-positive">OK</td>
-    <td class="cell-negative">throws</td>
-    <td class="cell-negative">throws</td>
+    <td class="cell-negative">fails/throws</td>
+    <td class="cell-negative">fails/throws</td>
   </tr>
   <tr>
     <td>reassign property</td>
     <td class="cell-positive">OK</td>
     <td class="cell-positive">OK</td>
-    <td class="cell-negative">throws</td>
+    <td class="cell-negative">fails/throws</td>
   </tr>
 </table>
--->
 
 ### Inspecting Objects
 We also have three inspection methods to determine what, if any, restrictions an object has.
+
 - `Object.isFrozen`: returns `true` only if object has been put through `Object.freeze`, else `false`.
+
 - `Object.isSealed`: returns `true` only if object has been passed to `Object.seal` _or_ `Object.freeze`, else `false`.
+
 - `Object.isExtensible`: returns `true` if none of `preventExtensions`, `seal`, or `freeze` have been called on the object.
 
 ### Caveats
@@ -96,11 +101,13 @@ One massive caveat comes to mind: these methods only restrict the top-level prop
 
 })();
 ```
+[MDN has an example](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/freeze) of recursively "deep freezing" an object so that it's completely immutable. Alternately, there's [a tiny Node module by Substack](https://github.com/substack/deep-freeze) which does the same thing, but is perhaps a little more robust.
+
 ### Use Cases
-I find that `freeze` is generally preferable to `seal`, as
 
 ### Support
 ES5 awesomeness is not supported everywhere, and these methods aren't <a href="https://github.com/es-shims/es5-shim">shim-able</a>. They're supported on all modern and modern-ish browsers, including:
+
 - IE 9+
 - FF 4+
 - Safari 5.1+

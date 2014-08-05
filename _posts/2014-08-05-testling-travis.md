@@ -5,6 +5,8 @@ title: Front-End Testing With Travis CI and Testling
 
 Continuous integration is great, and with [Travis CI](https://travis-ci.org/), it's incredibly easy to get up and running. That said, their documentation for headless browser testing is a little lacking. Travis boxes have PhantomJS installed, but the PhantomJS API isn't all that intuitive. In particular most examples demonstrate how to load an existing page from the web and running tests against that. I wanted to just throw the code from my repo into a new page and test against that, but there  isn't much guidance on how to do this.
 
+<!--more-->
+
 Enter [Testling](https://github.com/substack/testling). Testling sits on top of PhantomJS and lets you do exactly what I described above. By simply adding a few lines to your `package.json`, you can tell Testling what files you want to test and which other scripts (i.e. jQuery, etc.) it should inject into the page. [Testling CI](https://ci.testling.com/) is a continuous integration service based around the Testling npm package which runs your tests in a number of browsers, giving you an idea of where your code will work and where it won't; you've probably seen these badges on GitHub repos.
 
 Unfortunately, Testling CI has some warts. Most notably, it seems to have some pretty [consistent problems](https://github.com/substack/testling/issues/88) getting webhooks from GitHub. Also, its not implemented as a full-fledged "GitHub Service", meaning it doesn't provide information integrated into the GitHub UI. In contrast, Travis automatically runs your tests against pull requests, and the status is clearly noted right in the pull request thread.
